@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import Header from './components/Header';
 import Board from './components/Board';
-import CurrentWord from './components/CurrentWord';
-import ScoreTable from './components/ScoreTable';
 
 class App extends Component {
 	render() {
@@ -10,8 +8,6 @@ class App extends Component {
 			<div className="container main-boggle">
 				<Header />
                 <Board />
-                <CurrentWord />
-                <ScoreTable />
 			</div>
 		);
 	}
