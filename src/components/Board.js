@@ -35,9 +35,14 @@ class Board extends Component{
 	}
 
 	clickSubmit(){
+
 		this.state.submittedWords.push(this.state.displayWord)
 		console.log(this.state.submittedWords)
 
+		// Reset the scoreArray so the entire array isn't pushed each time
+		this.setState({
+			scoreArray: []
+		})
 		this.state.submittedWords.map((word, index)=>{
 			if (word.length <= 2){
 				this.state.scoreArray.push(0);
@@ -56,7 +61,10 @@ class Board extends Component{
 		console.log(this.state.scoreArray)
 
 		// Resets current word
-		this.state.currentWord = [];
+		this.setState({
+			currentWord: [],
+			displayWord: ''
+		})
 	}
 
 	
@@ -78,20 +86,17 @@ class Board extends Component{
 			)
 		})
 
-		var submittedWordsArray = [];
+
+		var submittedWordsHTML = [];
 		this.state.submittedWords.map((word, index)=>{
-			submittedWordsArray.push(
-				<tr>
+			submittedWordsHTML.push(
+				<tr key={index}>
 					<td>{word}</td>
-					<td>{submittedScoreArray}</td>
+					<td>score</td>
 				</tr>
 			)
 		})
 
-		var submittedScoreArray = [];
-		this.state.scoreArray.map((score, index)=>{
-			submittedScoreArray.push(score)
-		})
 
 		return(
 			<div>
@@ -106,15 +111,17 @@ class Board extends Component{
 					</span>
 				</div>
 				<table>
-					<tr>
-						<th>Word</th>
-						<th>Score</th>
-					</tr>
-					{submittedWordsArray}
-					<tr>
-						<th className="total">Total</th>
-						{/*<th className="total">{totalSum}</th>*/}
-					</tr>
+					<tbody>
+						<tr>
+							<th>Word</th>
+							<th>Score</th>
+						</tr>
+						{submittedWordsHTML}
+						<tr>
+							<th className="total">Total</th>
+							<th className="total">totalSum</th>
+						</tr>
+					</tbody>
 				</table>
 			</div>
 		)
