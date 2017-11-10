@@ -7,6 +7,7 @@ class Dice{
 	createDice(){
 		// Create and Shuffle dice
 		var diceArray = [
+			// 'qqqqqq',
 			"aaafrs",
 			"aaeeee",
 			"aafirs",

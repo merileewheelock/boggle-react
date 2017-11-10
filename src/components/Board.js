@@ -13,6 +13,7 @@ class Board extends Component{
 			displayWord: '',
 			submittedWords: [],
 			scoreArray: [],
+			totalSum: 0,
 			selectedIndexArray: []
 		}
 		this.clickLetter = this.clickLetter.bind(this);
@@ -130,35 +131,40 @@ class Board extends Component{
 
 	clickSubmit(){
 
-		this.state.submittedWords.push(this.state.displayWord)
-		console.log(this.state.submittedWords)
-
-		// Reset the scoreArray so the entire array isn't pushed each time
-		this.setState({
-			scoreArray: []
-		})
-		this.state.submittedWords.map((word, index)=>{
-			if (word.length <= 2){
-				this.state.scoreArray.push(0);
-			}else if (word.length <= 4){
-				this.state.scoreArray.push(1);
-			}else if (word.length === 5){
-				this.state.scoreArray.push(2);
-			}else if (word.length === 6){
-				this.state.scoreArray.push(3);
-			}else if (word.length === 7){
-				this.state.scoreArray.push(5);
-			}else{
-				this.state.scoreArray.push(11);
+		// This will prevent duplicate words from being submitted
+		for (let i = 0; i < this.state.submittedWords.length; i++){
+			if (this.state.displayWord === this.state.submittedWords[i]){
+				return;
 			}
-		})
-		console.log(this.state.scoreArray)
+		}
+
+		this.state.submittedWords.push(this.state.displayWord)
+		// console.log(this.state.submittedWords)
+
+		// Count number of letters in word, counting "Qu" as two letters
+		if (this.state.displayWord.length <= 2){
+			this.state.scoreArray.push(0);
+		}else if (this.state.displayWord.length <= 4){
+			this.state.scoreArray.push(1);
+		}else if (this.state.displayWord.length === 5){
+			this.state.scoreArray.push(2);
+		}else if (this.state.displayWord.length === 6){
+			this.state.scoreArray.push(3);
+		}else if (this.state.displayWord.length === 7){
+			this.state.scoreArray.push(5);
+		}else{
+			this.state.scoreArray.push(11);
+		}
+		// console.log(this.state.scoreArray)
 
 		// Resets current word
 		this.setState({
 			currentWord: [],
-			displayWord: ''
+			displayWord: '',
+			totalSum: this.state.scoreArray.reduce((a, b) => a + b, 0)
 		})
+		// To sum the values in an array: reduce method
+		// array.reduce(function(total, currentValue, currentIndex, arr), initialValue)
 
 		// Resets board
 		$('.dice').removeClass('selected');
@@ -166,18 +172,13 @@ class Board extends Component{
 		$('.dice').removeClass('letter-off');
 	}
 
-	
-
 	render(){
 
 		var diceOnBoard = [];
-
 		this.state.diceArray.map((die, index)=>{
-
 			if (die === "Q"){
 				die = "Qu";
 			}
-
 			diceOnBoard.push(
 				<div className="dice" onClick={()=>this.clickLetter(die, index)} key={index}>
 					{die}
@@ -190,11 +191,10 @@ class Board extends Component{
 			submittedWordsHTML.push(
 				<tr key={index}>
 					<td>{word}</td>
-					<td>score</td>
+					<td>{this.state.scoreArray[index]}</td>
 				</tr>
 			)
 		})
-
 
 		return(
 			<div>
@@ -217,7 +217,7 @@ class Board extends Component{
 						{submittedWordsHTML}
 						<tr>
 							<th className="total">Total</th>
-							<th className="total">totalSum</th>
+							<th className="total">{this.state.totalSum}</th>
 						</tr>
 					</tbody>
 				</table>
