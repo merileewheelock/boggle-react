@@ -57,13 +57,13 @@ class Board extends Component{
 				$('.dice').removeClass('letter-off');
 				// console.log("empty")
 			}
-			return
+			return;
 		}if ($(lettersList[index]).hasClass('letter-off')){
 			// console.log("letter is not adjacent, cannot click")
-			return
+			return;
 		}if ($(lettersList[index]).hasClass('selected')){
 			// console.log("letter has already been selected, cannot click")
-			return
+			return;
 		}
 		this.buildWord(value)
 		$('.current').removeClass('current') // Updates the current letter
