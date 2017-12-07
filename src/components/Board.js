@@ -27,7 +27,7 @@ class Board extends Component{
 
 		this.setState({
 			diceArray: diceArray
-		})
+		});
 	}
 
 	clickLetter(value, index){
@@ -79,7 +79,7 @@ class Board extends Component{
 		var displayWord = this.state.currentWord.join('');
 		this.setState({
 			displayWord: displayWord
-		})
+		});
 	}
 
 	checkAdjacentLetters(index, lettersList){
@@ -162,7 +162,7 @@ class Board extends Component{
 			currentWord: [],
 			displayWord: '',
 			totalSum: this.state.scoreArray.reduce((a, b) => a + b, 0)
-		})
+		});
 		// To sum the values in an array: reduce method
 		// array.reduce(function(total, currentValue, currentIndex, arr), initialValue)
 
@@ -184,7 +184,7 @@ class Board extends Component{
 					{die}
 				</div>
 			)
-		})
+		});
 
 		var submittedWordsHTML = [];
 		this.state.submittedWords.map((word, index)=>{
@@ -194,7 +194,7 @@ class Board extends Component{
 					<td>{this.state.scoreArray[index]}</td>
 				</tr>
 			)
-		})
+		});
 
 		return(
 			<div>
